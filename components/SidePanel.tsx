@@ -250,12 +250,12 @@ function Sparkline({ data }: { data: { version: string; gzip: number }[] }) {
 
     g.selectAll("circle").data(data).join("circle")
       .attr("cx", (_, i) => x(i)).attr("cy", (d) => y(d.gzip))
-      .attr("r", 2).attr("fill", "#22c55e")
+      .attr("r", 2).style("fill", "#22c55e")
 
     // Tooltip-like labels
     g.selectAll("text").data(data).join("text")
       .attr("x", (_, i) => x(i)).attr("y", (d) => y(d.gzip) - 6)
-      .attr("text-anchor", "middle").attr("font-size", 7).attr("fill", "#71717a")
+      .attr("text-anchor", "middle").attr("font-size", 7).style("fill", "#71717a")
       .text((d) => formatBytes(d.gzip))
   }, [data])
 
@@ -298,13 +298,13 @@ function NestedTreemap({ deps }: { deps: Record<string, string> }) {
     nodes.append("rect")
       .attr("width", (d) => Math.max(0, d.x1 - d.x0))
       .attr("height", (d) => Math.max(0, d.y1 - d.y0))
-      .attr("fill", "#22c55e").attr("opacity", 0.5).attr("rx", 2)
+      .style("fill", "#22c55e").style("opacity", "0.6").attr("rx", 2)
 
     nodes.each(function (d) {
       const w = d.x1 - d.x0, h = d.y1 - d.y0
       if (w < 30 || h < 15) return
       d3.select(this).append("text")
-        .attr("x", 3).attr("y", 11).attr("font-size", 8).attr("fill", "white").attr("font-family", "monospace")
+        .attr("x", 3).attr("y", 11).attr("font-size", 8).style("fill", "white").attr("font-family", "monospace")
         .text(d.data.name.length > w / 6 ? d.data.name.slice(0, Math.floor(w / 6)) + "\u2026" : d.data.name)
     })
   }, [deps])
