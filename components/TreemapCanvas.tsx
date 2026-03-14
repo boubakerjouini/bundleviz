@@ -161,10 +161,7 @@ export default function TreemapCanvas() {
       .data(leaves, (d) => d.data.name)
 
     // EXIT
-    nodes.exit()
-      .transition().duration(300)
-      .style("opacity", 0)
-      .remove()
+    nodes.exit().remove()
 
     // ENTER
     const enter = nodes.enter()
@@ -173,17 +170,13 @@ export default function TreemapCanvas() {
       .attr("data-testid", (d) => `node-${d.data.name}`)
       .attr("data-package", (d) => d.data.name)
       .attr("transform", (d) => `translate(${d.x0},${d.y0})`)
-      .style("opacity", 0)
+      .style("opacity", 1)   // set immediately — transitions get interrupted by re-renders
       .style("cursor", "pointer")
 
     enter.append("rect").attr("class", "node-rect")
     enter.append("text").attr("class", "node-name")
     enter.append("text").attr("class", "node-size")
-    // Security icon rect
     enter.append("text").attr("class", "node-icon")
-
-    // Transition enter to visible
-    enter.transition().duration(300).style("opacity", 1)
 
     // MERGE (enter + update)
     const merged = enter.merge(nodes)
