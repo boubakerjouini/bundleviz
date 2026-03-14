@@ -19,9 +19,8 @@ export const metadata: Metadata = {
     description: "Paste your package.json and get an interactive treemap of your dependencies sized by real gzip weight.",
   },
   icons: {
-    icon: [{ url: "/icon", type: "image/png" }],
-    shortcut: "/favicon.ico",
-    apple: [{ url: "/icon", type: "image/png" }],
+    icon: [{ url: "/icon", sizes: "32x32", type: "image/png" }],
+    apple: [{ url: "/icon", sizes: "32x32", type: "image/png" }],
   },
 }
 
