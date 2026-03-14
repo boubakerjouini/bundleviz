@@ -22,7 +22,7 @@ export default function SunburstChart() {
   const [dimensions, setDimensions] = useState({ width: 0, height: 0 })
 
   const getFiltered = useCallback((): BundleResult[] => {
-    let filtered = packages.filter((p) => !p.error)
+    let filtered = packages.map((p) => p.error ? { ...p, gzip: p.size || 1024, size: p.size || 1024 } : p)
     if (filter === "dep") filtered = filtered.filter((p) => p.type === "dep")
     if (filter === "dev") filtered = filtered.filter((p) => p.type === "dev")
     if (search) {
@@ -37,6 +37,8 @@ export default function SunburstChart() {
   const totalGzip = packages.filter((p) => !p.error).reduce((sum, p) => sum + p.gzip, 0)
 
   const getColor = useCallback((name: string, gzip: number): string => {
+    const pkg = packages.find((p) => p.name === name)
+    if (pkg?.error) return "#374151"
     if (colorMode === "size") return colorForSize(gzip)
     const enriched = enrichedData[name]
     if (colorMode === "license") return colorForLicense(enriched?.license)

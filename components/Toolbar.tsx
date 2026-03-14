@@ -169,6 +169,11 @@ export default function Toolbar({ treemapRef }: { treemapRef: React.RefObject<HT
       {outdatedCount > 0 && (
         <span className="rounded-md bg-medium/20 px-2 py-0.5 text-xs text-medium">{outdatedCount} outdated</span>
       )}
+      {packages.filter((p) => p.error).length > 0 && (
+        <span className="rounded-md bg-muted/20 px-2 py-0.5 text-xs text-muted" title="These packages are Node.js/backend-only and have no browser bundle size">
+          {packages.filter((p) => p.error).length} node-only (gray)
+        </span>
+      )}
 
       {/* Filter */}
       <div className="flex rounded-md border border-border text-xs">

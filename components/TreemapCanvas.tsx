@@ -24,7 +24,8 @@ export default function TreemapCanvas() {
   const zoomRef = useRef<d3.ZoomBehavior<SVGSVGElement, unknown> | null>(null)
 
   const getFiltered = useCallback((): BundleResult[] => {
-    let filtered = packages.filter((p) => !p.error)
+    // Include ALL packages — errored ones (backend/Node.js) get a minimum gzip of 1024 so they appear in treemap
+    let filtered = packages.map((p) => p.error ? { ...p, gzip: p.size || 1024, size: p.size || 1024 } : p)
     if (filter === "dep") filtered = filtered.filter((p) => p.type === "dep")
     if (filter === "dev") filtered = filtered.filter((p) => p.type === "dev")
     if (search) {
@@ -39,6 +40,9 @@ export default function TreemapCanvas() {
   const totalGzip = packages.filter((p) => !p.error).reduce((sum, p) => sum + p.gzip, 0)
 
   const getColor = useCallback((name: string, gzip: number): string => {
+    // Gray out packages bundlephobia couldn't size (backend/Node.js packages)
+    const pkg = packages.find((p) => p.name === name)
+    if (pkg?.error) return "#374151"
     if (colorMode === "size") return colorForSize(gzip)
     const enriched = enrichedData[name]
     if (colorMode === "license") return colorForLicense(enriched?.license)
