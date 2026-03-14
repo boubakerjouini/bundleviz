@@ -191,13 +191,18 @@ export default function TreemapCanvas() {
     merged.transition().duration(300)
       .attr("transform", (d) => `translate(${d.x0},${d.y0})`)
 
+    // Set fill immediately (no transition) — must use .style() not .attr() to override Tailwind Preflight's fill:currentColor
+    merged.select("rect.node-rect")
+      .style("fill", (d) => getColor(d.data.name, d.data.gzip || 0))
+      .style("opacity", (d) => String(removed.includes(d.data.name) ? 0.4 : 1))
+
     merged.select("rect.node-rect")
       .transition().duration(300)
       .attr("width", (d) => Math.max(0, d.x1 - d.x0))
       .attr("height", (d) => Math.max(0, d.y1 - d.y0))
-      .attr("fill", (d) => getColor(d.data.name, d.data.gzip || 0))
+      .style("fill", (d) => getColor(d.data.name, d.data.gzip || 0))
       .attr("rx", 3)
-      .attr("opacity", (d) => (removed.includes(d.data.name) ? 0.4 : 1))
+      .style("opacity", (d) => String(removed.includes(d.data.name) ? 0.4 : 1))
       .attr("stroke", (d) => {
         if (selected === d.data.name) return "#ffffff"
         if (duplicateNames.has(d.data.name)) return "#f97316"
