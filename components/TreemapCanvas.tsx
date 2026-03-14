@@ -170,6 +170,8 @@ export default function TreemapCanvas() {
     const enter = nodes.enter()
       .append("g")
       .attr("class", "node")
+      .attr("data-testid", (d) => `node-${d.data.name}`)
+      .attr("data-package", (d) => d.data.name)
       .attr("transform", (d) => `translate(${d.x0},${d.y0})`)
       .style("opacity", 0)
       .style("cursor", "pointer")

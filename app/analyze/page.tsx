@@ -88,7 +88,7 @@ function AnalyzeContent() {
               </div>
               <LicenseReport />
             </div>
-            <div className="hidden w-80 md:block">
+            <div className="w-80 max-md:hidden" data-testid="side-panel-container">
               <SidePanel />
             </div>
           </>

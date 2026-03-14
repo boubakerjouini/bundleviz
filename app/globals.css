@@ -1,65 +1,60 @@
 @import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap");
 @import "tailwindcss";
 
+/* Dark theme (default) */
+:root {
+  --bg: #0a0a0a;
+  --fg: #f4f4f5;
+  --surface: #111111;
+  --card: #171717;
+  --border: #262626;
+  --muted: #71717a;
+  --accent: #22c55e;
+  --safe: #22c55e;
+  --medium: #f59e0b;
+  --large: #f97316;
+  --huge: #ef4444;
+}
+
+/* Light theme */
+[data-theme="light"] {
+  --bg: #ffffff;
+  --fg: #111827;
+  --surface: #f9fafb;
+  --card: #f3f4f6;
+  --border: #e5e7eb;
+  --muted: #6b7280;
+  --accent: #16a34a;
+}
+
 @theme inline {
-  --color-background: #0a0a0a;
-  --color-foreground: #f4f4f5;
-  --color-surface: #111111;
-  --color-card: #171717;
-  --color-border: #262626;
-  --color-muted: #71717a;
-  --color-accent: #22c55e;
-  --color-safe: #22c55e;
-  --color-medium: #f59e0b;
-  --color-large: #f97316;
-  --color-huge: #ef4444;
+  --color-background: var(--bg);
+  --color-foreground: var(--fg);
+  --color-surface: var(--surface);
+  --color-card: var(--card);
+  --color-border: var(--border);
+  --color-muted: var(--muted);
+  --color-accent: var(--accent);
+  --color-safe: var(--safe);
+  --color-medium: var(--medium);
+  --color-large: var(--large);
+  --color-huge: var(--huge);
   --font-sans: "Inter", sans-serif;
   --font-mono: "JetBrains Mono", monospace;
 }
 
-body {
-  background: var(--color-background);
-  color: var(--color-foreground);
+html, body {
+  background-color: var(--bg);
+  color: var(--fg);
   font-family: var(--font-sans);
-}
-
-/* Light mode overrides */
-html.light {
-  --color-background: #ffffff;
-  --color-foreground: #111827;
-  --color-surface: #f9fafb;
-  --color-card: #f3f4f6;
-  --color-border: #e5e7eb;
-  --color-muted: #6b7280;
-}
-
-html.light body {
-  background: var(--color-background);
-  color: var(--color-foreground);
-}
-
-/* Fix SVG taking full height in flex containers */
-svg.h-full {
-  display: block;
-  height: 100%;
-  width: 100%;
+  transition: background-color 0.2s ease, color 0.2s ease;
 }
 
 /* Scrollbar */
-::-webkit-scrollbar {
-  width: 6px;
-  height: 6px;
-}
-::-webkit-scrollbar-track {
-  background: var(--color-surface);
-}
-::-webkit-scrollbar-thumb {
-  background: var(--color-border);
-  border-radius: 3px;
-}
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: var(--surface); }
+::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
 
-/* Textarea focus */
-textarea:focus {
-  outline: none;
-  box-shadow: 0 0 0 2px var(--color-accent);
-}
+textarea:focus { outline: none; box-shadow: 0 0 0 2px var(--accent); }
+
+svg { display: block; }

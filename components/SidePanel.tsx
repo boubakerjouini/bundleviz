@@ -17,7 +17,7 @@ export default function SidePanel() {
   const alts = selected ? alternatives[selected] : undefined
 
   return (
-    <div className="flex h-full w-full flex-col overflow-y-auto border-l border-border bg-surface p-4">
+    <div data-testid="side-panel" className="flex h-full w-full flex-col overflow-y-auto border-l border-border bg-surface p-4">
       <AnimatePresence mode="wait">
         {pkg ? (
           <motion.div key={pkg.name} initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }} transition={{ duration: 0.2 }}>
@@ -135,6 +135,7 @@ export default function SidePanel() {
                 {/* Links */}
                 <div className="mb-4 flex gap-2">
                   <a href={`https://www.npmjs.com/package/${pkg.name}`} target="_blank" rel="noopener noreferrer"
+                    data-testid="npm-link"
                     className="rounded border border-border px-3 py-1 text-xs text-muted transition hover:text-foreground">npm</a>
                   {pkg.repository && (
                     <a href={pkg.repository} target="_blank" rel="noopener noreferrer"

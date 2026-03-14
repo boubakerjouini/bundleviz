@@ -186,6 +186,7 @@ export default function HomePage() {
                       ? "border-accent bg-accent/10"
                       : "border-border bg-card"
                   }`}
+                  data-testid="drop-zone"
                   onDragOver={(e) => { e.preventDefault(); setIsDragging(true) }}
                   onDragLeave={() => setIsDragging(false)}
                   onDrop={(e) => {
@@ -235,9 +236,24 @@ export default function HomePage() {
               </>
             ) : tab === "github" ? (
               <>
-                <input type="text" value={githubUrl} onChange={(e) => setGithubUrl(e.target.value)}
+                <input
+                  type="url"
+                  data-testid="github-url-input"
+                  value={githubUrl}
+                  onChange={(e) => {
+                    setGithubUrl(e.target.value)
+                    // Inline validation: show error if not empty and not a github URL
+                    if (e.target.value && !e.target.value.includes("github.com")) {
+                      setError("Invalid GitHub URL — must start with https://github.com/owner/repo")
+                    } else {
+                      setError("")
+                    }
+                  }}
                   placeholder="https://github.com/owner/repo"
                   className="w-full rounded-lg border border-border bg-card px-4 py-3 font-mono text-sm text-foreground placeholder:text-muted/50" />
+                {error && (
+                  <p data-testid="github-error" className="mt-2 text-sm text-huge">{error}</p>
+                )}
                 <button onClick={handleGithubImport} disabled={!githubUrl.trim() || loading}
                   className="mt-3 w-full rounded-lg bg-accent px-6 py-3 text-sm font-semibold text-background transition hover:brightness-110 disabled:opacity-40">
                   {loading ? "Fetching..." : "Import & Analyze"}
@@ -287,7 +303,7 @@ export default function HomePage() {
               </>
             )}
 
-            {error && <p className="mt-3 text-sm text-huge">{error}</p>}
+            {error && tab !== "github" && <p data-testid="json-error" className="mt-3 text-sm text-huge">{error}</p>}
           </div>
 
           {/* Feature pills */}
