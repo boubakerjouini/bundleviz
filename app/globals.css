@@ -1,0 +1,65 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap");
+@import "tailwindcss";
+
+@theme inline {
+  --color-background: #0a0a0a;
+  --color-foreground: #f4f4f5;
+  --color-surface: #111111;
+  --color-card: #171717;
+  --color-border: #262626;
+  --color-muted: #71717a;
+  --color-accent: #22c55e;
+  --color-safe: #22c55e;
+  --color-medium: #f59e0b;
+  --color-large: #f97316;
+  --color-huge: #ef4444;
+  --font-sans: "Inter", sans-serif;
+  --font-mono: "JetBrains Mono", monospace;
+}
+
+body {
+  background: var(--color-background);
+  color: var(--color-foreground);
+  font-family: var(--font-sans);
+}
+
+/* Light mode overrides */
+html.light {
+  --color-background: #ffffff;
+  --color-foreground: #111827;
+  --color-surface: #f9fafb;
+  --color-card: #f3f4f6;
+  --color-border: #e5e7eb;
+  --color-muted: #6b7280;
+}
+
+html.light body {
+  background: var(--color-background);
+  color: var(--color-foreground);
+}
+
+/* Fix SVG taking full height in flex containers */
+svg.h-full {
+  display: block;
+  height: 100%;
+  width: 100%;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: var(--color-surface);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--color-border);
+  border-radius: 3px;
+}
+
+/* Textarea focus */
+textarea:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px var(--color-accent);
+}
